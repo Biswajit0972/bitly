@@ -8,3 +8,14 @@ export const loginSchema = z.object({
 });
 
 export type loginType = z.infer<typeof loginSchema>;
+
+export const signupSchema = z.object({
+    username: z.string().min(1, "Username is required"),
+    email: z.email("Provide a valid email"),
+    fullName: z.string().min(1, "Full name is required"),
+    password: z.string()
+        .min(8, 'Password must be at least 8 characters long')
+        .regex(PASSWORD_REGEX, 'Password must include upper, lower, number, and special character')
+});
+
+export type signupType = z.infer<typeof signupSchema>;
