@@ -6,7 +6,7 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {loginSchema, type loginType} from "../types/types.ts";
 import InputError from "../components/InputError.tsx";
-import {useState} from "react";
+import {useLoginHook} from "../query/hooks/queryHooks.ts";
 
 const Login = () => {
     const {register, handleSubmit, formState: {errors}, reset} = useForm<loginType>({
@@ -17,12 +17,12 @@ const Login = () => {
         }
     });
 
-    const [submit, setSubmit] = useState<boolean>(false);
+    const {mutateAsync, isPending} = useLoginHook();
 
-    const formSubmit = (data:loginType) => {
-        setSubmit(true);
-        console.log(data)
+    const formSubmit = async (data: loginType) => {
 
+        const res = await mutateAsync(data);
+        console.log(res);
         reset();
     }
 
@@ -31,7 +31,8 @@ const Login = () => {
             <h1 className="primary-txt text-center relative ">Log in</h1>
             <div className="relative h-[calc(100%-28px)]  flex-center ">
 
-                <Form className="bg-gray-900 rounded-lg p-4 flex-column gap-4  lg:w-1/2 lg:px-6 lg:py-8" onSubmit={handleSubmit(formSubmit)}>
+                <Form className="bg-gray-900 rounded-lg p-4 flex-column gap-4  lg:w-1/2 lg:px-6 lg:py-8"
+                      onSubmit={handleSubmit(formSubmit)}>
                     <FormDiv className="flex-center">
                         <img src="https://i.pinimg.com/originals/74/c7/81/74c781554de4f8827301fff8c72682c0.gif"
                              className="h-10 w-24 relative  rounded-full  overflow-hidden bg-red"/>
@@ -53,7 +54,7 @@ const Login = () => {
                         <p className="text-sm">Forgot password? <a>Signup</a></p>
                     </div>
 
-                    <Button variant="secondary" type="submit" loading={submit}>Submit</Button>
+                    <Button variant="secondary" type="submit" loading={isPending}>Submit</Button>
                 </Form>
             </div>
         </div>
