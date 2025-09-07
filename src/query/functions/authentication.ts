@@ -3,10 +3,10 @@ import axios from "axios";
 
 export const loginUser = async (data: loginType) => {
     try {
-        const response = await axios.post("http://localhost:3000/api/", {
+        const response = await axios.post("http://localhost:3000/api/users/login", {
             data
         });
-        
+
         return response.data;
     } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -20,7 +20,7 @@ export const loginUser = async (data: loginType) => {
 
 export const signupUser = async (data: signupType) => {
     try {
-        const response = await axios.post("http://localhost:3000/api/", {
+        const response = await axios.post("http://localhost:3000/api/users/register", {
             data
         });
         return response.data;
@@ -33,3 +33,4 @@ export const signupUser = async (data: signupType) => {
         }
     }
 }
+
