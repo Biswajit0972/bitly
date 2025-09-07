@@ -1,10 +1,10 @@
-import Login from "../login.tsx";
+import {Outlet} from "react-router-dom";
 
 const AuthLayout = () => {
     return (
         <div className="h-dvh w-full relative px-2 bg-black">
             <div className="relative h-full w-full  items-center">
-                <Login/>
+                <Outlet/>
             </div>
         </div>
     )
