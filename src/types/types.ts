@@ -19,3 +19,14 @@ export const signupSchema = z.object({
 });
 
 export type signupType = z.infer<typeof signupSchema>;
+
+export type AuthTokens = {
+    accessToken: string;
+    refreshToken: string;
+};
+
+export type LoginResponse = {
+    message: string;
+    data: AuthTokens;
+    statusCode: number;
+};
