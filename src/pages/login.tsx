@@ -7,6 +7,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {loginSchema, type loginType} from "../types/types.ts";
 import InputError from "../components/InputError.tsx";
 import {useLoginHook} from "../query/hooks/queryHooks.ts";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
     const {register, handleSubmit, formState: {errors}, reset} = useForm<loginType>({
@@ -18,12 +19,11 @@ const Login = () => {
     });
 
     const {mutateAsync, isPending} = useLoginHook();
+    const navigate =  useNavigate();
 
     const formSubmit = async (data: loginType) => {
-
-
-        const res = await mutateAsync(data);
-        console.log(res);
+        await mutateAsync(data);
+        navigate("/home");
         reset();
     }
 
