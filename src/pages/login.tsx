@@ -12,14 +12,15 @@ const Login = () => {
     const {register, handleSubmit, formState: {errors}, reset} = useForm<loginType>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
-            identifier: "",
-            password: ""
+            identifier: "johndoe123",
+            password: "StrongPass!2025"
         }
     });
 
     const {mutateAsync, isPending} = useLoginHook();
 
     const formSubmit = async (data: loginType) => {
+
 
         const res = await mutateAsync(data);
         console.log(res);

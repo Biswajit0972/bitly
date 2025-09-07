@@ -6,8 +6,9 @@ const Authentication = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isTokenAvailable } = getTokens();
+    console.log(isTokenAvailable)
 
-  useEffect(() => {
+    useEffect(() => {
 
     if (!isTokenAvailable && pathname !== "/login" && pathname !== "/signup") {
       navigate("/login", { replace: true });
