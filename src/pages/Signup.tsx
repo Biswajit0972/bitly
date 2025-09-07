@@ -5,8 +5,9 @@ import {Button} from "../components/Button.tsx";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import InputError from "../components/InputError.tsx";
-import {useState} from "react";
 import {signupSchema, type signupType} from "../types/types.ts";
+import {useSignUpHook} from "../query/hooks/queryHooks.ts";
+import {useNavigate} from "react-router-dom";
 
 const Signup = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<signupType>({
@@ -19,14 +20,14 @@ const Signup = () => {
         }
     });
 
-    const [submitting, setSubmitting] = useState<boolean>(false);
+    const navigate =  useNavigate();
 
-    const onSubmit = (data: signupType) => {
-        setSubmitting(true);
-        console.log("Signup data:", data);
-        // TODO: integrate API call here
+    const {mutateAsync, isPending} = useSignUpHook();
+
+    const onSubmit = async (data: signupType) => {
+        await mutateAsync(data);
         reset();
-        setSubmitting(false);
+        navigate("/login")
     };
 
     return (
@@ -65,7 +66,7 @@ const Signup = () => {
                         <p className="text-sm">Already have an account? <a>Login</a></p>
                     </div>
 
-                    <Button variant="secondary" type="submit" loading={submitting}>Create account</Button>
+                    <Button variant="secondary" type="submit" loading={isPending}>Create account</Button>
                 </Form>
             </div>
         </div>
