@@ -9,6 +9,10 @@
         @apply flex justify-center items-center;
     }
 
+    .flex-between {
+        @apply flex justify-between items-center;
+    }
+
     .bg-red {
         @apply bg-red-500;
     }

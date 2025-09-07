@@ -3,13 +3,11 @@ import {cn} from "../utils/cn.ts";
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
     className?: string;
-    handleSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
-
 }
 
-const Form: FC<FormProps> = ({children, handleSubmit, className, ...props}) => {
+const Form: FC<FormProps> = ({children, className, ...props}) => {
     return (
-        <form className={cn("w-full relative", className)} onSubmit={handleSubmit} {...props}>
+        <form className={cn("w-full relative", className)}  {...props}>
             {
                 children
             }
