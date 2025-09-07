@@ -1,12 +1,13 @@
-import type {loginType, signupType} from "../../types/types.ts";
+import type {LoginResponse, loginType, signupType} from "../../types/types.ts";
 import axios from "axios";
 
 export const loginUser = async (data: loginType) => {
     try {
-        const response = await axios.post("http://localhost:3000/api/users/login", {
-            data
-        });
+        console.log(data.identifier)
 
+        const response = await axios.post<LoginResponse>("http://localhost:3000/api/users/login", data);
+
+        localStorage.setItem("Token", response.data.data.accessToken)
         return response.data;
     } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -20,9 +21,7 @@ export const loginUser = async (data: loginType) => {
 
 export const signupUser = async (data: signupType) => {
     try {
-        const response = await axios.post("http://localhost:3000/api/users/register", {
-            data
-        });
+        const response = await axios.post("http://localhost:3000/api/users/register", data);
         return response.data;
     } catch (e) {
         if (axios.isAxiosError(e)) {
