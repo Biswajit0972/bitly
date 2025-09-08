@@ -1,5 +1,5 @@
 // src/pages/NotFound.tsx
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const NotFound = () => {
     return (
@@ -18,7 +18,7 @@ const NotFound = () => {
                         Go Home
                     </Link>
                     <Link
-                        to="/login"
+                        to="/auth/login"
                         className="inline-flex items-center justify-center rounded-md border border-gray-700 px-5 py-2.5 text-sm font-medium hover:bg-gray-800 transition-colors"
                     >
                         Login

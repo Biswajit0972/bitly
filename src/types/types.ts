@@ -30,3 +30,10 @@ export type LoginResponse = {
     data: AuthTokens;
     statusCode: number;
 };
+
+export const shortUrlSchema = z.object({
+    url: z.url("Provide a valid url"),
+    shortCode: z.string().optional()
+});
+
+export type shortUrlType = z.infer<typeof shortUrlSchema>;
