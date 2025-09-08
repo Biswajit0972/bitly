@@ -6,6 +6,7 @@ import NotFound from "./pages/Error.tsx";
 import Authentication from "./components/Authentication.tsx";
 import HomeLayout from "./pages/Layouts/HomeLayout.tsx";
 import QueryProvider from "./query/QueryProvider.tsx";
+import Home from "./pages/Home.tsx";
 
 const router = createBrowserRouter([
     {
@@ -13,19 +14,22 @@ const router = createBrowserRouter([
         Component: Authentication,
         children: [
             {
-                Component: AuthLayout,
+                Component: HomeLayout,
                 children: [
-                    {index: true, Component: Login},
-                    {path: "login", Component: Login},
-                    {path: "signup", Component: Signup},
-                    {path: "*", Component: NotFound}
+                    { index: true, Component: Home },
+                    { path:"/home", Component: Home }
                 ]
             },
             {
-                path: "/home",
-                Component: HomeLayout,
-                children: []
-            }
+                path: "/auth",
+                Component: AuthLayout,
+                children: [
+                    { index: true, Component: Login },
+                    { path: "login", Component: Login },
+                    { path: "signup", Component: Signup }
+                ]
+            },
+            { path: "*", Component: NotFound }
         ]
     }
 ]);
