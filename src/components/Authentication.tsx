@@ -10,14 +10,15 @@ const Authentication = () => {
 
     useEffect(() => {
 
-    if (!isTokenAvailable && pathname !== "/login" && pathname !== "/signup") {
-      navigate("/login", { replace: true });
-      return;
+    // if (!isTokenAvailable && pathname !== "/login" && pathname !== "/signup") {
+    //   navigate("/auth/login", { replace: true });
+    //   return;
+    // }
+
+    if (isTokenAvailable && (pathname === "/auth/login" || pathname === "/auth/signup" )) {
+      navigate("/", { replace: true });
     }
 
-    if (isTokenAvailable && (pathname === "/login" || pathname === "/signup" || pathname === "/")) {
-      navigate("/home", { replace: true });
-    }
   }, [isTokenAvailable, pathname, navigate]);
 
   return <Outlet />;
