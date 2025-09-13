@@ -8,6 +8,7 @@ import {loginSchema, type loginType} from "../types/types.ts";
 import InputError from "../components/InputError.tsx";
 import {useLoginHook} from "../query/hooks/queryHooks.ts";
 import {useNavigate} from "react-router-dom";
+import {useAuth} from "../context/Auth.ts";
 
 const Login = () => {
     const {register, handleSubmit, formState: {errors}, reset} = useForm<loginType>({
@@ -19,10 +20,11 @@ const Login = () => {
     });
 
     const {mutateAsync, isPending} = useLoginHook();
-    const navigate =  useNavigate();
-
+    const navigate = useNavigate();
+    const {setIsLoggedIn} = useAuth();
     const formSubmit = async (data: loginType) => {
         await mutateAsync(data);
+        setIsLoggedIn(true);
         navigate("/home");
         reset();
     }

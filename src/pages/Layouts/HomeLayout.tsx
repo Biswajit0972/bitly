@@ -1,5 +1,6 @@
 import { Outlet} from "react-router-dom";
 import Header from "../../components/Header.tsx";
+import {Bounce, ToastContainer} from "react-toastify";
 
 const HomeLayout = () => {
     return (
@@ -22,6 +23,19 @@ const HomeLayout = () => {
                     </div>
                 </div>
             </footer>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                transition={Bounce}
+            />
         </div>
 
     )

@@ -7,6 +7,7 @@ import Authentication from "./components/Authentication.tsx";
 import HomeLayout from "./pages/Layouts/HomeLayout.tsx";
 import QueryProvider from "./query/QueryProvider.tsx";
 import Home from "./pages/Home.tsx";
+import AuthProvider from "./context/AuthProvider.tsx";
 
 const router = createBrowserRouter([
     {
@@ -16,27 +17,31 @@ const router = createBrowserRouter([
             {
                 Component: HomeLayout,
                 children: [
-                    { index: true, Component: Home },
-                    { path:"/home", Component: Home }
+                    {index: true, Component: Home},
+                    {path: "/home", Component: Home}
                 ]
             },
             {
                 path: "/auth",
                 Component: AuthLayout,
                 children: [
-                    { index: true, Component: Login },
-                    { path: "login", Component: Login },
-                    { path: "signup", Component: Signup }
+                    {index: true, Component: Login},
+                    {path: "login", Component: Login},
+                    {path: "signup", Component: Signup}
                 ]
             },
-            { path: "*", Component: NotFound }
+            {path: "*", Component: NotFound}
         ]
     }
 ]);
 
 const App = () => {
     return <QueryProvider>
-        <RouterProvider router={router}/>
+        <AuthProvider>
+
+
+            <RouterProvider router={router}/>
+        </AuthProvider>
     </QueryProvider>;
 };
 

@@ -1,16 +1,17 @@
 import Form from "./Form.tsx";
 import {useForm} from "react-hook-form";
-import {shortUrlSchema, type shortUrlType} from "../types/types.ts";
+import {type CreateShortcodeResponse, shortUrlSchema, type shortUrlType} from "../types/types.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
 import FormDiv from "./FormDiv.tsx";
 import FormInput from "./FormInput.tsx";
 import InputError from "./InputError.tsx";
 import {Button} from "./Button.tsx";
 import {useState} from "react";
+import {useShortUrlHook} from "../query/hooks/queryHooks.ts";
+import Loader from "./Loader.tsx";
+import {getTokens} from "../utils/helpers/warrperRouter.ts";
+import {toast} from "react-toastify";
 
-interface ShortenFormProps {
-
-}
 
 const ShortenForm = () => {
     const {register, formState: {errors}, reset, handleSubmit} = useForm<shortUrlType>({
@@ -22,10 +23,27 @@ const ShortenForm = () => {
     });
 
     const [shortUrl, setShortUrl] = useState<string | null>(null);
+    const {mutateAsync, isPending, data: shortCode, isError, error} = useShortUrlHook();
 
+    const handleShortenForm = async (data: shortUrlType) => {
+        const {isTokenAvailable} = getTokens();
+        if (!isTokenAvailable) {
+            toast.error("Please login to continue 💀");
+            return;
+        }
+        const {data: resCode} = await mutateAsync(data) as CreateShortcodeResponse;
+        setShortUrl("http://localhost:3000/api/url/" + `${resCode.shortCode}`);
+        reset();
+    }
+
+    if (isError) {
+        toast.error(error?.message)
+        console.log("", error)
+    }
     return (
         <>
-            <Form className="mx-auto mt-8 flex w-full max-w-2xl flex-col gap-3 sm:flex-row">
+            <Form className="mx-auto mt-8 flex w-full max-w-2xl flex-col gap-3 sm:flex-row"
+                  onSubmit={handleSubmit(handleShortenForm)}>
                 <div className="flex relative w-full gap-2 ">
                     <FormDiv>
                         <FormInput {...register("url")} size="sm" placeholder="Paste a long URL (https://...)"
@@ -49,29 +67,34 @@ const ShortenForm = () => {
                     submit
                 </Button>
             </Form>
-            {shortUrl && (
-                <div
-                    className="mx-auto mt-4 w-full max-w-2xl rounded-md border border-emerald-500/30 bg-emerald-500/10 p-3 text-left sm:p-4">
-                    <div className="flex items-center justify-between gap-3">
-                        <a
-                            href={shortUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="truncate font-medium text-emerald-300 hover:underline"
-                        >
-                            {shortUrl}
-                        </a>
-                        <button
-                            type="button"
-                            onClick={() => navigator.clipboard.writeText(shortUrl)}
-                            className="rounded-md border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white transition hover:bg-white/10"
-                        >
-                            Copy
-                        </button>
-                    </div>
+
+        {isPending ? <div className="mx-auto mt-4 w-full max-w-2xl flex-center">
+            <Loader/>
+        </div> : shortCode && (
+            <div
+                className="mx-auto mt-4 w-full max-w-2xl rounded-md border border-emerald-500/30 bg-emerald-500/10 p-3 text-left sm:p-4">
+                <div className="flex items-center justify-between gap-3">
+                    <a
+                        href={shortUrl!}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="truncate font-medium text-emerald-300 hover:underline"
+                    >
+                        {shortUrl}
+                    </a>
+                    <button
+                        type="button"
+                        onClick={() => navigator.clipboard.writeText(shortUrl!)}
+                        className="rounded-md border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white transition hover:bg-white/10"
+                    >
+                        Copy
+                    </button>
                 </div>
-            )}
+            </div>
+
+        )}
         </>
-    )
-}
-export default ShortenForm
+    );
+};
+
+export default ShortenForm;
