@@ -33,3 +33,5 @@ export const signupUser = async (data: signupType) => {
     }
 }
 
+// url handling started here.
+
