@@ -7,7 +7,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import InputError from "../components/InputError.tsx";
 import {signupSchema, type signupType} from "../types/types.ts";
 import {useSignUpHook} from "../query/hooks/queryHooks.ts";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Signup = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<signupType>({
@@ -63,7 +63,7 @@ const Signup = () => {
                     </FormDiv>
 
                     <div className="relative w-full flex-between">
-                        <p className="text-sm">Already have an account? <a>Login</a></p>
+                        <p className="text-sm">Already have an account? <Link to="/auth/login">Login</Link></p>
                     </div>
 
                     <Button variant="secondary" type="submit" loading={isPending}>Create account</Button>
