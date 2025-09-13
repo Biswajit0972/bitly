@@ -6,7 +6,6 @@ const Authentication = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isTokenAvailable } = getTokens();
-    console.log(isTokenAvailable)
 
     useEffect(() => {
 
