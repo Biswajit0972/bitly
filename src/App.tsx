@@ -8,6 +8,7 @@ import HomeLayout from "./pages/Layouts/HomeLayout.tsx";
 import QueryProvider from "./query/QueryProvider.tsx";
 import Home from "./pages/Home.tsx";
 import AuthProvider from "./context/AuthProvider.tsx";
+import Pricing from "./pages/Pricing.tsx";
 
 const router = createBrowserRouter([
     {
@@ -18,7 +19,8 @@ const router = createBrowserRouter([
                 Component: HomeLayout,
                 children: [
                     {index: true, Component: Home},
-                    {path: "/home", Component: Home}
+                    {path: "/home", Component: Home},
+                    {path: "/pricing", Component: Pricing}
                 ]
             },
             {
