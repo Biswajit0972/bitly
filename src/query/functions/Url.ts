@@ -7,7 +7,7 @@ export const getShortUrl = ErrorWrapper(async (data: shortUrlType) => {
     if (!token) {
         throw "Token not found";
     }
-    const response = await axios.post("http://localhost:3001/api/url/short", data, {
+    const response = await axios.post("http://localhost:3000/api/url/short", data, {
         headers: {
             Authorization: `Bearer ${token}`
         },
