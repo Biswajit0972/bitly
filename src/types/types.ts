@@ -1,5 +1,6 @@
 import * as z from 'zod';
 
+
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
 
 export const loginSchema = z.object({
@@ -46,4 +47,21 @@ export type CreateShortcodeResponse = {
         long_url: string;
     };
     statusCode: number;
+};
+
+export type Feature = {
+    label: string;
+    available: boolean;
+};
+
+export type AboutFeature = {
+    title: string;
+    desc: string;
+    icon: "target" | "shield" | "globe";
+};
+
+export type AboutValue = {
+    title: string;
+    desc: string;
+    icon: "heart" | "shield" | "globe" | "target";
 };
