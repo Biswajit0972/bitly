@@ -37,3 +37,13 @@ export const shortUrlSchema = z.object({
 });
 
 export type shortUrlType = z.infer<typeof shortUrlSchema>;
+
+export type CreateShortcodeResponse = {
+    message: string;
+    data: {
+        id: number;
+        shortCode: string;
+        long_url: string;
+    };
+    statusCode: number;
+};

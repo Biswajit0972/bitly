@@ -17,15 +17,16 @@ type Fun<T, R> = (data: T) => Promise<R> | R;
 
 export const ErrorWrapper =
     <T, R>(fn: Fun<T, R>) => {
-        return async (data: T): Promise<R | undefined> => {
+        return async (data: T): Promise<R | never> => {
             try {
                 return await fn(data);
             } catch (e) {
                 if (axios.isAxiosError(e)) {
-                    console.log(e.response?.data);
+                   throw e.response?.data;
                 } else {
                     const err = e as Error;
-                    console.log(err.message);
+
+                    throw err.message;
                 }
             }
         };
