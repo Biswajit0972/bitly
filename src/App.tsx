@@ -9,6 +9,7 @@ import QueryProvider from "./query/QueryProvider.tsx";
 import Home from "./pages/Home.tsx";
 import AuthProvider from "./context/AuthProvider.tsx";
 import Pricing from "./pages/Pricing.tsx";
+import About from "./pages/About.tsx";
 
 const router = createBrowserRouter([
     {
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
                 children: [
                     {index: true, Component: Home},
                     {path: "/home", Component: Home},
-                    {path: "/pricing", Component: Pricing}
+                    {path: "/pricing", Component: Pricing},
+                    {path: "/about", Component: About}
                 ]
             },
             {
