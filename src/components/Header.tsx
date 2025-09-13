@@ -24,7 +24,7 @@ const Header = () => {
                               <Link to={item}
                                     className="text-sm text-white/80 hover:text-white transition-colors capitalize">
                                   {
-                                      item.split("#")[1]
+                                      item.split("/")[1]
                                   }
                               </Link>
                           </li>}/>
