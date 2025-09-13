@@ -1,2 +1,2 @@
 
-export const basicNavigationLink  = ["#features", "#pricing", "#about"]
+export const basicNavigationLink  = [ "/pricing", "/about", "/dashboard"]
