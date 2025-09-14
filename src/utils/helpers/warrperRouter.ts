@@ -25,7 +25,6 @@ export const ErrorWrapper =
                    throw e.response?.data;
                 } else {
                     const err = e as Error;
-
                     throw err.message;
                 }
             }
