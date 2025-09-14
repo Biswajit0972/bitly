@@ -65,3 +65,18 @@ export type AboutValue = {
     desc: string;
     icon: "heart" | "shield" | "globe" | "target";
 };
+
+export type ShortUrl = {
+    id: number;
+    short_urlID: string;
+    long_url: string;
+    user_id: number;
+    createdAt: string; // ISO date string
+    updatedAt: string; // ISO date string
+};
+
+export type GetShortUrlsResponse = {
+    message: string;
+    data: ShortUrl[];
+    statusCode: number;
+};
