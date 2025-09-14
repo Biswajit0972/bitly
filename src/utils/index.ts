@@ -1,57 +1,56 @@
 import type {AboutFeature, AboutValue} from "../types/types.ts";
 
-export const basicNavigationLink  = [ "/pricing", "/about", "/dashboard"]
+export const basicNavigationLink = ["/pricing", "/about", "/dashboard"]
 
-export const planCardsData =  [
-  {
-    name: "Free",
-    price: "$0",
-    period: "/mo",
-    badge: "Starter",
-    highlight: false,
-    cta: { label: "Create Free Account", to: "/auth/signup" },
-    features: [
-      { label: "Shorten unlimited links", available: true },
-      { label: "See total click count", available: true },
-      { label: "Device, referrer, and location analytics", available: false },
-      { label: "Analytics retention for 2 months", available: false },
-      { label: "Analytics retention for 6 months", available: false },
-      { label: "Email support", available: true },
-    ],
-  },
-  {
-    name: "Premium",
-    price: "$12",
-    period: "/mo",
-    badge: "Most Popular",
-    highlight: true,
-    cta: { label: "Start Premium", to: "/auth/signup" },
-    features: [
-      { label: "Everything in Free", available: true },
-      { label: "Full analytics (devices, referrers, locations)", available: true },
-      { label: "Analytics retention for 2 months", available: true },
-      { label: "Custom link management (tags, notes)", available: true },
-      { label: "Priority email support", available: true },
-      { label: "Analytics retention for 6 months", available: false },
-    ],
-  },
-  {
-    name: "Super",
-    price: "$29",
-    period: "/mo",
-    badge: "Pro",
-    highlight: false,
-    cta: { label: "Get Super", to: "/auth/signup" },
-    features: [
-      { label: "Everything in Free + Premium", available: true },
-      { label: "Team features & sharing", available: true },
-      { label: "Advanced UTMs & export", available: true },
-      { label: "Analytics retention for 6 months", available: true },
-      { label: "SLA & dedicated support", available: true },
-    ],
-  },
+export const planCardsData = [
+    {
+        name: "Free",
+        price: "$0",
+        period: "/mo",
+        badge: "Starter",
+        highlight: false,
+        cta: {label: "Create Free Account", to: "/auth/signup"},
+        features: [
+            {label: "Shorten unlimited links", available: true},
+            {label: "See total click count", available: true},
+            {label: "Device, referrer, and location analytics", available: false},
+            {label: "Analytics retention for 2 months", available: false},
+            {label: "Analytics retention for 6 months", available: false},
+            {label: "Email support", available: true},
+        ],
+    },
+    {
+        name: "Premium",
+        price: "$12",
+        period: "/mo",
+        badge: "Most Popular",
+        highlight: true,
+        cta: {label: "Start Premium", to: "/auth/signup"},
+        features: [
+            {label: "Everything in Free", available: true},
+            {label: "Full analytics (devices, referrers, locations)", available: true},
+            {label: "Analytics retention for 2 months", available: true},
+            {label: "Custom link management (tags, notes)", available: true},
+            {label: "Priority email support", available: true},
+            {label: "Analytics retention for 6 months", available: false},
+        ],
+    },
+    {
+        name: "Super",
+        price: "$29",
+        period: "/mo",
+        badge: "Pro",
+        highlight: false,
+        cta: {label: "Get Super", to: "/auth/signup"},
+        features: [
+            {label: "Everything in Free + Premium", available: true},
+            {label: "Team features & sharing", available: true},
+            {label: "Advanced UTMs & export", available: true},
+            {label: "Analytics retention for 6 months", available: true},
+            {label: "SLA & dedicated support", available: true},
+        ],
+    },
 ]
-
 
 
 export const AboutFeaturesData: AboutFeature[] = [
@@ -94,3 +93,27 @@ export const AboutValuesData: AboutValue[] = [
         desc: "Measure what matters and keep it simple.",
     },
 ];
+
+export  type dashBoardLinkType = {
+    title: string,
+    icon: "link" | "chart-pie" | "profile" | "heart" | "Target",
+    to: string,
+}
+
+export const dashBoardLinks: dashBoardLinkType[] = [
+    {
+        title: "Links",
+        icon: "link",
+        to: "/dashboard/getLinks"
+    },
+    {
+        title: "Analytics",
+        icon: "chart-pie",
+        to: "/dashboard/analytics"
+    },
+    {
+        title: "profile",
+        icon: "profile",
+        to: "/dashboard/profile"
+    }
+]
