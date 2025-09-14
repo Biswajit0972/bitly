@@ -2,8 +2,9 @@ import axios from "axios";
 import type {shortUrlType} from "../../types/types.ts";
 import {ErrorWrapper} from "../../utils/helpers/warrperRouter.ts";
 
-const token = localStorage.getItem("Token");
+
 export const getShortUrl = ErrorWrapper(async (data: shortUrlType) => {
+    const token = localStorage.getItem("Token");
     if (!token) {
         throw "Token not found";
     }
@@ -17,6 +18,7 @@ export const getShortUrl = ErrorWrapper(async (data: shortUrlType) => {
 })
 
 export const getAllShortUrls = ErrorWrapper(async () => {
+    const token = localStorage.getItem("Token");
     if (!token) {
         throw new Error("Token not found");
     }
@@ -33,6 +35,7 @@ export const getAllShortUrls = ErrorWrapper(async () => {
 });
 
 export const deleteShortUrl = ErrorWrapper(async (id: string) => {
+    const token = localStorage.getItem("Token");
     if (!token) {
         throw new Error("Token not found");
     }
