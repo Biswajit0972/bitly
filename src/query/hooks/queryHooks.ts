@@ -1,21 +1,22 @@
 import {useMutation} from "@tanstack/react-query";
 import {loginUser, signupUser} from "../functions/authentication.ts";
 import type {loginType, shortUrlType, signupType} from "../../types/types.ts";
-import {getShortUrl} from "../functions/Url.ts";
+import {deleteShortUrl, getShortUrl} from "../functions/Url.ts";
+import {queryClient} from "../query.ts";
 
 export const useLoginHook = () => {
-   const {mutateAsync, isPending, data, error, isError} = useMutation({
-       mutationFn: (data: loginType) => loginUser(data),
-       mutationKey: ["login"],
-       onSuccess: (data) => {
-           console.log(data);
-       },
-       onError: (err) => {
-           console.log(err);
-       }
-   });
+    const {mutateAsync, isPending, data, error, isError} = useMutation({
+        mutationFn: (data: loginType) => loginUser(data),
+        mutationKey: ["login"],
+        onSuccess: (data) => {
+            console.log(data);
+        },
+        onError: (err) => {
+            console.log(err);
+        }
+    });
 
-   return {mutateAsync, isPending, data, error, isError};
+    return {mutateAsync, isPending, data, error, isError};
 }
 
 export const useSignUpHook = () => {
@@ -37,6 +38,18 @@ export const useShortUrlHook = () => {
     const {mutateAsync, isPending, data, error, isError} = useMutation({
         mutationFn: (data: shortUrlType) => getShortUrl(data),
         mutationKey: ["getShortUrl"],
+    });
+
+    return {mutateAsync, isPending, data, error, isError};
+}
+
+export const useDeleteShortUrlHook = () => {
+    const {mutateAsync, isPending, data, error, isError} = useMutation({
+        mutationFn: (id: string) => deleteShortUrl(id),
+        mutationKey: ["deleteShortUrl"],
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ["allLinks"]});
+        }
     });
 
     return {mutateAsync, isPending, data, error, isError};
