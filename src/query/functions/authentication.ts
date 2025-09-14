@@ -1,5 +1,6 @@
 import type {LoginResponse, loginType, signupType} from "../../types/types.ts";
 import axios from "axios";
+import {ErrorWrapper} from "../../utils/helpers/warrperRouter.ts";
 
 export const loginUser = async (data: loginType) => {
     try {
@@ -7,7 +8,8 @@ export const loginUser = async (data: loginType) => {
 
         const response = await axios.post<LoginResponse>("http://localhost:3000/api/users/login", data);
 
-        localStorage.setItem("Token", response.data.data.accessToken)
+        localStorage.setItem("Token", response.data.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.data.refreshToken);
         return response.data;
     } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -32,6 +34,25 @@ export const signupUser = async (data: signupType) => {
         }
     }
 }
+
+export const revalidateToken = ErrorWrapper(async () => {
+    const token = localStorage.getItem("refreshToken");
+
+    if (!token) {
+        throw new Error("Token not found");
+    }
+    
+    const response = await axios.get("http://localhost:3000/api/users/revalidate", {
+        headers: {
+            "X-Refresh-Token": token,
+        },
+        withCredentials: true,
+    });
+    console.log(response.data)
+
+    localStorage.setItem("Token", response.data.data.accessToken);
+    return response.data;
+})
 
 // url handling started here.
 
