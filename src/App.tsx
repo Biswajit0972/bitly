@@ -10,6 +10,8 @@ import Home from "./pages/Home.tsx";
 import AuthProvider from "./context/AuthProvider.tsx";
 import Pricing from "./pages/Pricing.tsx";
 import About from "./pages/About.tsx";
+import Dashboard from "./pages/Layouts/Dashboard.tsx";
+import GetLinks from "./pages/GetLinks.tsx";
 
 const router = createBrowserRouter([
     {
@@ -22,7 +24,14 @@ const router = createBrowserRouter([
                     {index: true, Component: Home},
                     {path: "/home", Component: Home},
                     {path: "/pricing", Component: Pricing},
-                    {path: "/about", Component: About}
+                    {path: "/about", Component: About},
+                    {
+                        path: "/dashboard", Component: Dashboard,
+                        children: [
+                            {index: true, Component: GetLinks},
+                            {path: "/dashboard/getLinks", Component: GetLinks}
+                        ]
+                    }
                 ]
             },
             {
@@ -31,7 +40,8 @@ const router = createBrowserRouter([
                 children: [
                     {index: true, Component: Login},
                     {path: "login", Component: Login},
-                    {path: "signup", Component: Signup}
+                    {path: "signup", Component: Signup},
+
                 ]
             },
             {path: "*", Component: NotFound}
