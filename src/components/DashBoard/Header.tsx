@@ -14,7 +14,7 @@ import List from "../List.tsx";
 import {dashBoardLinks} from "../../utils";
 
 
-const Header = () => {
+const Header = ( ) => {
     return (
         <div className="w-full h-12 bg-gray-900">
             <div className=" h-full mx-auto max-w-7xl flex-between px-4 sm:px-6 lg:px-8">
