@@ -1,6 +1,7 @@
 import * as z from 'zod';
 
 
+
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
 
 export const loginSchema = z.object({
@@ -68,11 +69,12 @@ export type AboutValue = {
 
 export type ShortUrl = {
     id: number;
-    short_urlID: string;
-    long_url: string;
+    shortUrlID: string;
+    longUrl: string;
     user_id: number;
+    title: string;
+    clicksCount: number;
     createdAt: string; // ISO date string
-    updatedAt: string; // ISO date string
 };
 
 export type GetShortUrlsResponse = {
@@ -80,3 +82,21 @@ export type GetShortUrlsResponse = {
     data: ShortUrl[];
     statusCode: number;
 };
+
+
+export const linkFormSchema = z.object({
+    title: z.string().min(1, "Title is required"),
+    long_url: z.url("Provide a valid url"),
+    short_urlID: z.string().optional(),
+    user_id: z.number("Provide a valid user id"),
+});
+
+export type LinkFormValues = z.infer<typeof linkFormSchema>;
+
+export type Action = { type: "Add Link" } | { type: "Edit Link", payload: LinkFormValues } | { type: "Close Form" };
+
+export type State = {
+    isFormOpen: boolean;
+    formValues?: LinkFormValues;
+    mode: "create" | "edit";
+}
