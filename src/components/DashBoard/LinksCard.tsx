@@ -2,34 +2,40 @@ import {ExternalLink, Edit2, Trash2, Copy, Loader} from "lucide-react";
 import {toast} from "react-toastify";
 import {useDeleteShortUrlHook} from "../../query/hooks/queryHooks.ts";
 import {Button} from "../Button.tsx";
+import type {Dispatch} from "react";
+import type {Action, LinkFormValues} from "../../types/types.ts";
 
 
 type LinksCardProps = {
     id: string | number;
     title?: string;
-    short_urlID: string;
-    long_url: string;
-    clicks?: number;
+    shortUrlID: string;
+    longUrl: string;
+    clicksCount?: number | string;
     createdAt?: string | Date;
     handleOpen: (url: string) => void;
     formatDate: (input: string | Date) => string;
+    dispatch: Dispatch<Action>;
+    user_id: number,
 };
 
 const LinksCard = ({
                        id,
                        title = "Link Title",
-                       long_url,
-                       short_urlID,
-                       clicks,
+                       longUrl,
+                       shortUrlID,
+                       clicksCount,
                        createdAt,
                        handleOpen,
                        formatDate,
+    user_id,
+    dispatch
                    }: LinksCardProps) => {
 
     const {isPending, isError: DelError, mutateAsync, error} = useDeleteShortUrlHook();
 
     const handleDelete = async () => {
-        await mutateAsync(short_urlID);
+        await mutateAsync(shortUrlID);
     }
 
     if (DelError) {
@@ -37,9 +43,15 @@ const LinksCard = ({
     }
 
     const handleEdit = async () => {
-
+        const editableData:LinkFormValues = {
+            title,
+            long_url: longUrl,
+            short_urlID: shortUrlID,
+            user_id
+        };
+        dispatch({type: "Edit Link",  payload: editableData});
     }
-    const shortUrl = "http://localhost:3000/api/url/" + `${short_urlID}`;
+    const shortUrl = "http://localhost:3000/api/url/" + `${shortUrlID}`;
     return (
         <article
             key={id}
@@ -52,7 +64,7 @@ const LinksCard = ({
 
                 <button
                     type="button"
-                    onClick={() => handleOpen(long_url)}
+                    onClick={() => handleOpen(longUrl)}
                     className="inline-flex h-8 w-8 items-center justify-center rounded-md text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100"
                     aria-label="Open link"
                     title="Open"
@@ -62,16 +74,16 @@ const LinksCard = ({
             </div>
 
             <p className="mb-2 truncate text-sm text-blue-600 hover:underline dark:text-blue-400">
-                <span className="font-bold text-white pr-1">Long URL</span> {long_url}
+                <span className="font-bold text-white pr-1">Long URL</span> {longUrl}
             </p>
             <p className="mb-4 truncate text-sm text-blue-600 hover:underline dark:text-blue-400">
                 <span className="font-bold text-white pr-1">Short URL</span>{shortUrl}
             </p>
 
             <div className="mb-4 flex items-center gap-3 text-xs text-gray-600 dark:text-gray-400">
-                {typeof clicks === "number" && (
+                {typeof clicksCount === "number" && (
                     <span className="rounded bg-gray-100 px-2 py-0.5 dark:bg-gray-800">
-            {clicks} clicks
+            {clicksCount} clicks
           </span>
                 )}
                 {createdAt && (
