@@ -23,6 +23,8 @@ const buttonVariants = cva(
                     "bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600",
                 link:
                     "bg-transparent underline-offset-4 text-primary-600 hover:underline dark:text-primary-400",
+                add:
+                "bg-green-500 text-white hover:bg-green-600 cursor-pointer"
             },
             size: {
                 sm: "h-8 px-3 text-sm",
