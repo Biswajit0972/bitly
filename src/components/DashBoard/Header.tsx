@@ -29,7 +29,7 @@ const Header = ( ) => {
                 </Button>
                 <nav className="hidden md:flex items-center ">
                     <List data={dashBoardLinks} render={(item) => {
-                        return <Link to={item.to}
+                        return <Link key={item.title} to={item.to}
                                      className="text-sm text-white/80 hover:text-white transition-colors capitalize">
                             <div className="flex items-center gap-2">
                                 {
