@@ -1,9 +1,9 @@
 import axios from "axios";
-import type {shortUrlType} from "../../types/types.ts";
+import type {LinkFormValues, shortUrlType} from "../../types/types.ts";
 import {ErrorWrapper} from "../../utils/helpers/warrperRouter.ts";
 
 
-export const createShortUrl = ErrorWrapper(async (data: shortUrlType) => {
+export const createShortUrl = ErrorWrapper(async (data: shortUrlType | LinkFormValues) => {
     const token = localStorage.getItem("Token");
     if (!token) {
         throw "Token not found";
