@@ -1,7 +1,7 @@
 import {useMutation} from "@tanstack/react-query";
 import {loginUser, signupUser} from "../functions/authentication.ts";
 import type {loginType, shortUrlType, signupType} from "../../types/types.ts";
-import {deleteShortUrl, getShortUrl} from "../functions/Url.ts";
+import {deleteShortUrl, createShortUrl} from "../functions/Url.ts";
 import {queryClient} from "../query.ts";
 
 export const useLoginHook = () => {
@@ -36,7 +36,7 @@ export const useSignUpHook = () => {
 
 export const useShortUrlHook = () => {
     const {mutateAsync, isPending, data, error, isError} = useMutation({
-        mutationFn: (data: shortUrlType) => getShortUrl(data),
+        mutationFn: (data: shortUrlType) => createShortUrl(data),
         mutationKey: ["getShortUrl"],
     });
 

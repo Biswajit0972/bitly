@@ -3,7 +3,7 @@ import type {shortUrlType} from "../../types/types.ts";
 import {ErrorWrapper} from "../../utils/helpers/warrperRouter.ts";
 
 
-export const getShortUrl = ErrorWrapper(async (data: shortUrlType) => {
+export const createShortUrl = ErrorWrapper(async (data: shortUrlType) => {
     const token = localStorage.getItem("Token");
     if (!token) {
         throw "Token not found";
