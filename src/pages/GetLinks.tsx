@@ -116,8 +116,7 @@ const GetLinks: React.FC<HomeProps> = () => {
             {
                 state.isFormOpen && (<div className="absolute h-full w-full rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 border
  top-0 left-0 z-10  flex-center px-16">
-                    <LinkForm mode={state.mode} onSubmit={() => {
-                    }} defaultValues={state.formValues} dispatch={dispatch}/>
+                    <LinkForm mode={state.mode}  defaultValues={state.formValues} dispatch={dispatch}/>
                 </div>)
             }
         </main>
