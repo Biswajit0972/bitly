@@ -85,10 +85,9 @@ export type GetShortUrlsResponse = {
 
 
 export const linkFormSchema = z.object({
-    title: z.string().min(1, "Title is required"),
-    long_url: z.url("Provide a valid url"),
+    tittle: z.string().min(1, "Title is required"),
+    url: z.url("Provide a valid url"),
     short_urlID: z.string().optional(),
-    user_id: z.number("Provide a valid user id"),
 });
 
 export type LinkFormValues = z.infer<typeof linkFormSchema>;
