@@ -1,5 +1,5 @@
 import axios from "axios";
-import type {LinkFormValues, shortUrlType} from "../../types/types.ts";
+import type {LinkFormValues, shortUrlType, UpdateLinkType} from "../../types/types.ts";
 import {ErrorWrapper} from "../../utils/helpers/warrperRouter.ts";
 
 
@@ -47,3 +47,18 @@ export const deleteShortUrl = ErrorWrapper(async (id: string) => {
     });
     return response.data;
 });
+
+export const updateShortUrl = ErrorWrapper(async (data:UpdateLinkType) => {
+    const token = localStorage.getItem("Token");
+    if (!token) {
+        throw new Error("Token not found");
+    }
+
+    const response = await axios.put(`http://localhost:3000/api/urls/update/${data.short_urlID}`, data, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        withCredentials: true,
+    });
+    return response.data;
+})
