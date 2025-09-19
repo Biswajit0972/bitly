@@ -1,7 +1,6 @@
 import * as z from 'zod';
 
 
-
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
 
 export const loginSchema = z.object({
@@ -99,3 +98,11 @@ export type State = {
     formValues?: LinkFormValues;
     mode: "create" | "edit";
 }
+
+export const updateLinkSchema = z.object({
+    tittle: z.string().min(1, "Title is required"),
+    url: z.url("Provide a valid url"),
+    short_urlID: z.string("provide a valid short url id"),
+});
+
+export type UpdateLinkType = z.infer<typeof updateLinkSchema>;
