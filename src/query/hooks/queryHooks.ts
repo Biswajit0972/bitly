@@ -1,7 +1,7 @@
 import {useMutation} from "@tanstack/react-query";
 import {loginUser, signupUser} from "../functions/authentication.ts";
-import type {LinkFormValues, loginType, shortUrlType, signupType} from "../../types/types.ts";
-import {deleteShortUrl, createShortUrl} from "../functions/Url.ts";
+import type {LinkFormValues, loginType, shortUrlType, signupType, UpdateLinkType} from "../../types/types.ts";
+import {deleteShortUrl, createShortUrl, updateShortUrl} from "../functions/Url.ts";
 import {queryClient} from "../query.ts";
 
 export const useLoginHook = () => {
@@ -36,10 +36,10 @@ export const useSignUpHook = () => {
 
 export const useShortUrlHook = () => {
     const {mutateAsync, isPending, data, error, isError} = useMutation({
-        mutationFn: (data: shortUrlType|LinkFormValues) => createShortUrl(data),
+        mutationFn: (data: shortUrlType | LinkFormValues) => createShortUrl(data),
         mutationKey: ["getShortUrl"],
-        onSuccess:  async() => {
-           await queryClient.invalidateQueries({queryKey: ["allLinks"]});
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ["allLinks"]});
         }
     });
 
@@ -50,6 +50,18 @@ export const useDeleteShortUrlHook = () => {
     const {mutateAsync, isPending, data, error, isError} = useMutation({
         mutationFn: (id: string) => deleteShortUrl(id),
         mutationKey: ["deleteShortUrl"],
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ["allLinks"]});
+        }
+    });
+
+    return {mutateAsync, isPending, data, error, isError};
+}
+
+export const useUpdateShortUrlHook = () => {
+    const {mutateAsync, isPending, data, error, isError} = useMutation({
+        mutationFn: (data: UpdateLinkType) => updateShortUrl(data),
+        mutationKey: ["updateShortUrl"],
         onSuccess: async () => {
             await queryClient.invalidateQueries({queryKey: ["allLinks"]});
         }
