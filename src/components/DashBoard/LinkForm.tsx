@@ -1,16 +1,16 @@
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {type Action, linkFormSchema, type LinkFormValues} from "../../types/types.ts";
+import {type Action, linkFormSchema, type LinkFormValues, type UpdateLinkType} from "../../types/types.ts";
 import Form from "../Form.tsx";
 import FormDiv from "../FormDiv.tsx";
 import FormInput from "../FormInput.tsx";
 import InputError from "../InputError.tsx";
 import {Button} from "../Button.tsx";
-import {XIcon} from "lucide-react";
+import {Loader, XIcon} from "lucide-react";
 import type {Dispatch} from "react";
-import {useShortUrlHook} from "../../query/hooks/queryHooks.ts";
+import {useShortUrlHook, useUpdateShortUrlHook} from "../../query/hooks/queryHooks.ts";
 import {toast} from "react-toastify";
-import Loader from "../Loader.tsx";
+
 
 type LinkFormMode = "create" | "edit";
 
@@ -25,7 +25,6 @@ type LinkFormProps = {
 const LinkForm = ({
                       mode,
                       defaultValues,
-                      submitLabel,
                       dispatch
                   }: LinkFormProps) => {
     const {
@@ -48,17 +47,29 @@ const LinkForm = ({
         isError: urlCreationError
     } = useShortUrlHook();
 
+    const {mutateAsync, isError, isPending, error} = useUpdateShortUrlHook();
+
     if (urlCreationError) {
         toast.error(createError?.message || "Failed to create link");
         dispatch({type: "Close Form"});
     }
 
-    const submitForm = async (data: LinkFormValues) => {
+    if (isError) {
+        toast.error(error?.message || "Failed to update link");
+        dispatch({type: "Close Form"});
+    }
+
+    const submitForm = async (data: UpdateLinkType | LinkFormValues) => {
 
         if (mode === "create") {
             await asyncCreateUrl(data);
             dispatch({type: "Close Form"});
             toast.success("Link created successfully");
+        } else {
+            const newData = {...data, short_urlID: data.short_urlID as string}
+            await mutateAsync(newData);
+            toast.success("Link updated successfully");
+            dispatch({type: "Close Form"});
         }
     }
 
@@ -112,9 +123,16 @@ const LinkForm = ({
                     {errors.short_urlID && <InputError message={errors.short_urlID.message}/>}
                 </FormDiv>
 
-                <Button type="submit" disabled={creatingShortURL}>
-                    {(!creatingShortURL && submitLabel) ?? (mode === "edit" ? "Update link" : "Create link")}
-                    {creatingShortURL && <Loader/>}
+                <Button type="submit" disabled={creatingShortURL || isPending}>
+                    {
+                        !isPending && mode === "edit" ? "Update Link" : isPending &&
+                            <Loader/>
+                    }
+                    {
+                        !creatingShortURL && mode === "create" ? "create Link" : creatingShortURL &&
+                            <Loader/>
+                    }
+
                 </Button>
             </div>
         </Form>
