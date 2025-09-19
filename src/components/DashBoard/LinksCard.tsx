@@ -8,7 +8,7 @@ import type {Action, LinkFormValues} from "../../types/types.ts";
 
 type LinksCardProps = {
     id: string | number;
-    title?: string;
+    tittle?: string;
     shortUrlID: string;
     longUrl: string;
     clicksCount?: number | string;
@@ -16,19 +16,17 @@ type LinksCardProps = {
     handleOpen: (url: string) => void;
     formatDate: (input: string | Date) => string;
     dispatch: Dispatch<Action>;
-    user_id: number,
 };
 
 const LinksCard = ({
                        id,
-                       title = "Link Title",
+                       tittle = "Link Title",
                        longUrl,
                        shortUrlID,
                        clicksCount,
                        createdAt,
                        handleOpen,
                        formatDate,
-    user_id,
     dispatch
                    }: LinksCardProps) => {
 
@@ -44,13 +42,13 @@ const LinksCard = ({
 
     const handleEdit = async () => {
         const editableData:LinkFormValues = {
-            title,
-            long_url: longUrl,
+            tittle,
+            url: longUrl,
             short_urlID: shortUrlID,
-            user_id
         };
         dispatch({type: "Edit Link",  payload: editableData});
     }
+
     const shortUrl = "http://localhost:3000/api/url/" + `${shortUrlID}`;
     return (
         <article
@@ -59,7 +57,7 @@ const LinksCard = ({
         >
             <div className="mb-3 flex items-start justify-between gap-3">
                 <h3 className="line-clamp-2 font-medium text-gray-900 dark:text-gray-100">
-                    {title}
+                    {tittle}
                 </h3>
 
                 <button
