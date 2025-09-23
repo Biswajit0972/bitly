@@ -48,9 +48,7 @@ export const revalidateToken = ErrorWrapper(async () => {
         },
         withCredentials: true,
     });
-    console.log(response.data)
 
-    localStorage.setItem("Token", response.data.data.accessToken);
     return response.data;
 })
 
