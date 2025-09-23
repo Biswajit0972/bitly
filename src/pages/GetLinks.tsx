@@ -88,7 +88,7 @@ const GetLinks: React.FC<HomeProps> = () => {
 
 
     return (
-        <main className="w-full h-full overflow-y-auto bg-gray-50 dark:bg-gray-950">
+        <main className="w-full h-full overflow-y-auto bg-black">
             <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8 relative">
                 <LinksHeader totalLinks={items.length} dispatch={dispatch}/>
                 {
