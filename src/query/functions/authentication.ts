@@ -39,7 +39,7 @@ export const revalidateToken = ErrorWrapper(async () => {
     const token = localStorage.getItem("refreshToken");
 
     if (!token) {
-        throw new Error("Token not found");
+        throw new Error("401");
     }
     
     const response = await axios.get("http://localhost:3000/api/users/revalidate", {
@@ -51,6 +51,3 @@ export const revalidateToken = ErrorWrapper(async () => {
 
     return response.data;
 })
-
-// url handling started here.
-
