@@ -41,7 +41,7 @@ const Header = () => {
                             Sign up
                         </Link>
                     </div>) : <Button variant="destructive" onClick={() => {
-                        localStorage.removeItem("Token");
+                        localStorage.clear();
                         setIsLoggedIn(false);
                     }}>Logout</Button>
                 }
