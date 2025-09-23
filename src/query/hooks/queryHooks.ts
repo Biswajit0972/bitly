@@ -1,5 +1,5 @@
 import {useMutation} from "@tanstack/react-query";
-import {loginUser, signupUser} from "../functions/authentication.ts";
+import {loginUser, revalidateToken, signupUser} from "../functions/authentication.ts";
 import type {LinkFormValues, loginType, shortUrlType, signupType, UpdateLinkType} from "../../types/types.ts";
 import {deleteShortUrl, createShortUrl, updateShortUrl} from "../functions/Url.ts";
 import {queryClient} from "../query.ts";
@@ -68,4 +68,18 @@ export const useUpdateShortUrlHook = () => {
     });
 
     return {mutateAsync, isPending, data, error, isError};
+}
+
+export const useTokenValidationHook = () => {
+   const {mutateAsync, isPending, data, error, isError} = useMutation({
+       mutationFn: () => revalidateToken(),
+       mutationKey: ["revalidateToken"],
+       onSuccess: (data) => {
+           console.log(data);
+       },
+       onError: (err) => {
+           console.log(err);
+       }
+   });
+   return {mutateAsync, isPending, data, error, isError};
 }
