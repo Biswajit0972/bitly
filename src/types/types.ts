@@ -106,3 +106,8 @@ export const updateLinkSchema = z.object({
 });
 
 export type UpdateLinkType = z.infer<typeof updateLinkSchema>;
+
+export interface AuthError {
+    error: string;
+    message: string;
+}
