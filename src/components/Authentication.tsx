@@ -3,6 +3,7 @@ import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import {useTokenValidationHook} from "../query/hooks/queryHooks.ts";
 import {getTokens} from "../utils/helpers/warrperRouter.ts";
 import {useAuth} from "../context/Auth.ts";
+import type {AuthError} from "../types/types.ts";
 
 
 const Authentication = () => {
@@ -51,19 +52,26 @@ const Authentication = () => {
                 setIsLoggedIn(true);
             } catch (e) {
                 setIsLoggedIn(false);
+                console.log(e)
+                if (pathname === "/auth/login" || pathname === "/auth/signup") {
+                    return;
+                }
+
                 if (e === "401") {
-                    if (pathname === "/auth/login" || pathname === "/auth/signup") {
-                        return;
-                    }
                     navigate("/");
                     return;
                 }
-                navigate("/auth/login");
-                console.log(e)
+                
+                const err = e as AuthError;
+                if (err.error === "unauthorized") {
+                    localStorage.clear();
+                    navigate("/auth/login");
+                    return;
+                }
             }
-        }, 10000);
+        }, 14 * 60 * 1000);
         return () => clearInterval(timerId);
-    }, [tokenUpdateFn, navigate, setIsLoggedIn,  pathname]);
+    }, [tokenUpdateFn, navigate, setIsLoggedIn, pathname]);
 
     return <Outlet/>;
 };
