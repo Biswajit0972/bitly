@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Link2} from "lucide-react";
 import {basicNavigationLink} from "../utils";
 import List from "./List.tsx";
@@ -8,6 +8,7 @@ import {useAuth} from "../context/Auth.ts";
 
 const Header = () => {
     const {isLoggedIn, setIsLoggedIn} = useAuth();
+    const navigate = useNavigate();
     return (
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between ">
@@ -41,6 +42,7 @@ const Header = () => {
                             Sign up
                         </Link>
                     </div>) : <Button variant="destructive" onClick={() => {
+                        navigate("/");
                         localStorage.clear();
                         setIsLoggedIn(false);
                     }}>Logout</Button>
